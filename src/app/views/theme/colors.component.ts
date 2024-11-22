@@ -1,15 +1,52 @@
 import { AfterViewInit, Component, HostBinding, Inject, Input, OnInit, Renderer2, forwardRef } from '@angular/core';
-import { DOCUMENT, NgClass } from '@angular/common';
+import { CommonModule, DOCUMENT, NgClass } from '@angular/common';
 
 import { getStyle, rgbToHex } from '@coreui/utils';
 import { TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, RowComponent, ColComponent } from '@coreui/angular';
 
 @Component({
     templateUrl: 'colors.component.html',
+    styleUrl: './colors.component.scss',
     standalone: true,
-    imports: [TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, RowComponent, forwardRef(() => ThemeColorComponent)]
+    imports: [TextColorDirective, CommonModule, CardComponent, CardHeaderComponent, CardBodyComponent, RowComponent, forwardRef(() => ThemeColorComponent)]
 })
 export class ColorsComponent implements OnInit, AfterViewInit {
+
+  orders = [
+    {
+      userName: 'John Doe',
+      userStatus: 'New | Registered: Jan 1, 2021',
+      userImage: 'assets/images/user1.jpg',
+      countryFlag: 'assets/images/usa.png',
+      orderStatus: 'Completed',
+      statusColor: 'completed',
+      amount: '$120',
+      paymentMethod: 'assets/images/mastercard.png',
+      orderDate: 'Nov 21, 2024',
+    },
+    {
+      userName: 'Jane Smith',
+      userStatus: 'Recurring | Registered: Feb 10, 2021',
+      userImage: 'assets/images/user2.jpg',
+      countryFlag: 'assets/images/brazil.png',
+      orderStatus: 'Pending',
+      statusColor: 'pending',
+      amount: '$200',
+      paymentMethod: 'assets/images/visa.png',
+      orderDate: 'Nov 20, 2024',
+    },
+    {
+      userName: 'Alice Brown',
+      userStatus: 'VIP | Registered: Mar 15, 2021',
+      userImage: 'assets/images/user3.jpg',
+      countryFlag: 'assets/images/uk.png',
+      orderStatus: 'Cancelled',
+      statusColor: 'cancelled',
+      amount: '$300',
+      paymentMethod: 'assets/images/paypal.png',
+      orderDate: 'Nov 19, 2024',
+    },
+  ];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -56,7 +93,9 @@ export class ColorsComponent implements OnInit, AfterViewInit {
       <div [ngClass]="colorClasses" style="padding-top: 75%;"></div>
       <ng-content></ng-content>
     </c-col>
+
   `,
+    styleUrl: './colors.component.scss',
     standalone: true,
     imports: [ColComponent, NgClass],
 })
@@ -74,5 +113,8 @@ export class ThemeColorComponent implements OnInit {
       [`bg-${this.color}`]: !!this.color
     };
   }
+
+
+
 }
 

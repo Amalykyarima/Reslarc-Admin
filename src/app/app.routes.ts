@@ -26,6 +26,10 @@ export const routes: Routes = [
         path: 'manage-products',
         loadChildren: () => import('./views/manage-products/routes').then((m) => m.routes)
       },
+      // {
+      //   path: 'orders',
+      //   loadChildren: () => import('./views/orders/routes').then((m) => m.routes)
+      // },
       {
         path: 'theme',
         loadChildren: () => import('./views/theme/routes').then((m) => m.routes)

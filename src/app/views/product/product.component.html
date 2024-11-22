@@ -1,4 +1,4 @@
-<form cForm>
+<!-- <form cForm>
   <div class="mb-3">
     <label cLabel for="inputEmail-1">Email address</label>
     <input cFormControl id="inputEmail-1" type="email">
@@ -15,4 +15,38 @@
     <label cFormCheckLabel for="checkMeOut-1">Check me out</label>
   </c-form-check>
   <input cButton color="primary" type="submit">
-</form>
+</form> -->
+
+<div class="registration-form-container">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <h2>Add Product</h2>
+
+    <div class="form-group">
+      <label for="name">Product Title</label>
+      <input id="name" type="text" formControlName="name" placeholder="Product" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Price</label>
+      <input id="email" type="email" formControlName="email" placeholder="Price" required />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Quantity</label>
+      <input id="phone" type="tel" formControlName="phone" placeholder="Quantity" required />
+    </div>
+
+    <div class="form-group">
+      <label for="organization">Size</label>
+      <input id="organization" type="text" formControlName="organization" placeholder="Size" />
+    </div>
+
+    <div class="form-group">
+      <label for="idCard">Upload</label>
+      <input id="idCard" type="file" (change)="onFileChange($event)" accept=".png, .jpg, .jpeg, .pdf" />
+    </div>
+
+    <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
+  </form>
+</div>
+

@@ -1,4 +1,4 @@
-<c-card class="mb-4">
+<!-- <c-card class="mb-4">
   <c-card-header>
     Theme colors
   </c-card-header>
@@ -30,4 +30,43 @@
       </app-theme-color>
     </c-row>
   </c-card-body>
-</c-card>
+</c-card> -->
+
+<div class="order-page">
+  <h1>Orders</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Country</th>
+        <th>Order Status</th>
+        <th>Amount</th>
+        <th>Payment Method</th>
+        <th>Order Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td class="user-info">
+          <img [src]="order.userImage" alt="User image" />
+          <div>
+            <span class="name">{{ order.userName }}</span>
+            <span class="status">{{ order.userStatus }}</span>
+          </div>
+        </td>
+        <td>
+          <img [src]="order.countryFlag" alt="Country flag" class="flag" />
+        </td>
+        <td>
+          <span [ngClass]="order.statusColor">{{ order.orderStatus }}</span>
+        </td>
+        <td>{{ order.amount }}</td>
+        <td>
+          <img [src]="order.paymentMethod" alt="Payment method" class="payment-icon" />
+        </td>
+        <td>{{ order.orderDate }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

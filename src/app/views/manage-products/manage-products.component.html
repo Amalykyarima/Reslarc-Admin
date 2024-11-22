@@ -1,1 +1,20 @@
-<p>manage-products works!</p>
+<div class="products-page">
+  <h1>Products Available for Sale</h1>
+  <p *ngIf="!products.length">No products available.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
