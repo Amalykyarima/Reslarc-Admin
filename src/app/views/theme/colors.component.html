@@ -48,21 +48,21 @@
     <tbody>
       <tr *ngFor="let order of orders">
         <td class="user-info">
-          <img [src]="order.userImage" alt="User image" />
+          <!-- <img [src]="order.userImage" alt="User image" /> -->
           <div>
             <span class="name">{{ order.userName }}</span>
             <span class="status">{{ order.userStatus }}</span>
           </div>
         </td>
         <td>
-          <img [src]="order.countryFlag" alt="Country flag" class="flag" />
+          <!-- <img [src]="order.countryFlag" alt="Country flag" class="flag" /> -->
         </td>
         <td>
           <span [ngClass]="order.statusColor">{{ order.orderStatus }}</span>
         </td>
         <td>{{ order.amount }}</td>
         <td>
-          <img [src]="order.paymentMethod" alt="Payment method" class="payment-icon" />
+          <!-- <img [src]="order.paymentMethod" alt="Payment method" class="payment-icon" /> -->
         </td>
         <td>{{ order.orderDate }}</td>
       </tr>
