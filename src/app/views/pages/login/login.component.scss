@@ -1,0 +1,35 @@
+.spinner {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button-primary {
+  // margin-top: 100px;
+  gap: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // height: 50px; /* Adjust height as needed */
+  font-size: 16px;
+  background-color: #f9c802;
+
+}
+
+.bg-reslarc {
+  background-color: #f9c802;
+}

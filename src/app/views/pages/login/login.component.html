@@ -5,34 +5,33 @@
         <c-card-group>
           <c-card class="p-4">
             <c-card-body>
-              <form cForm>
+              <form [formGroup]="loginForm" cForm>
                 <h1>Login</h1>
                 <p class="text-body-secondary">Sign In to your account</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Username" />
+                  <input autoComplete="username" cFormControl placeholder="Email" formControlName="email" />
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
-                  <input
-                    autoComplete="current-password"
-                    cFormControl
-                    placeholder="Password"
-                    type="password"
+                  <input autoComplete="current-password" cFormControl placeholder="Password" type="password" formControlName="password"
                   />
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary">
-                      Login
+                    <button (click)="login()" cButton class="px-4 button-primary" color="primary">
+                      <span *ngIf="processLoading" class="spinner"></span>
+                      <p style="margin-bottom:0rem !important" *ngIf="!processLoading">Login</p>
                     </button>
+
+
                   </c-col>
                   <c-col class="text-right" xs="6">
-                    <button cButton class="px-0" color="link">
+                    <button cButton style="color: black !important;" class="px-0" color="link">
                       Forgot password?
                     </button>
                   </c-col>
@@ -40,15 +39,15 @@
               </form>
             </c-card-body>
           </c-card>
-          <c-card [ngStyle]="{'minWidth.%': 44}" class="text-white bg-primary py-5">
+          <c-card [ngStyle]="{'minWidth.%': 44}" class="text-white bg-reslarc py-5">
             <c-card-body class="text-center">
               <div>
-                <h2>Sign up</h2>
-                <p>
+                <h2 style="color: black !important;">Sign up</h2>
+                <p style="color: black !important;">
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua.
                 </p>
-                <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
+                <button [active]="true" style="color:rgb(255, 255, 255); background-color: rgb(16, 77, 152); " cButton class="mt-3" color="primary" routerLink="/register">
                   Register Now!
                 </button>
               </div>

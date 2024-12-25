@@ -1,52 +1,86 @@
-<!-- <form cForm>
-  <div class="mb-3">
-    <label cLabel for="inputEmail-1">Email address</label>
-    <input cFormControl id="inputEmail-1" type="email">
-    <div cFormText>
-      We'll never share your email with anyone else
-    </div>
+<div *ngIf="!selectedRequest && requests">
+  <div class="table-container">
+    <table *ngIf="requests.length > 0; else emptyState">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Request Name</th>
+          <th>Description</th>
+          <th>Requested By</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of requests" (click)="showRequestDetails(request)">
+          <td>{{ request.createdAt | date: 'medium' }}</td>
+          <td>{{ request.name }}</td>
+          <td>{{ request.description }}</td>
+          <td>{{ request.user.firstName }} {{ request.user.lastName }}</td>
+          <td>{{ request.status }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div class="mb-3">
-    <label cLabel for="inputPassword-1">Password</label>
-    <input cFormControl id="inputPassword-1" type="password">
-  </div>
-  <c-form-check class="mb-3">
-    <input cFormCheckInput id="checkMeOut-1" type="checkbox">
-    <label cFormCheckLabel for="checkMeOut-1">Check me out</label>
-  </c-form-check>
-  <input cButton color="primary" type="submit">
-</form> -->
 
-<div class="registration-form-container">
-  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-    <h2>Add Product</h2>
-
-    <div class="form-group">
-      <label for="name">Product Title</label>
-      <input id="name" type="text" formControlName="name" placeholder="Product" required />
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <p>No requests available at the moment.</p>
     </div>
-
-    <div class="form-group">
-      <label for="email">Price</label>
-      <input id="email" type="email" formControlName="email" placeholder="Price" required />
-    </div>
-
-    <div class="form-group">
-      <label for="phone">Quantity</label>
-      <input id="phone" type="tel" formControlName="phone" placeholder="Quantity" required />
-    </div>
-
-    <div class="form-group">
-      <label for="organization">Size</label>
-      <input id="organization" type="text" formControlName="organization" placeholder="Size" />
-    </div>
-
-    <div class="form-group">
-      <label for="idCard">Upload</label>
-      <input id="idCard" type="file" (change)="onFileChange($event)" accept=".png, .jpg, .jpeg, .pdf" />
-    </div>
-
-    <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
-  </form>
+  </ng-template>
 </div>
 
+<div *ngIf="selectedRequest">
+  <!-- Back Button -->
+  <button class="back-button" (click)="goBack()">Back</button>
+
+  <!-- Request Details -->
+  <div class="request-details">
+    <h3>Request Details</h3>
+    <ul>
+      <li><strong>Date:</strong> {{ selectedRequest.createdAt | date: 'medium' }}</li>
+      <li><strong>Name:</strong> {{ selectedRequest.name }}</li>
+      <li><strong>Description:</strong> {{ selectedRequest.description }}</li>
+      <li><strong>Status:</strong> {{ selectedRequest.status }}</li>
+    </ul>
+  </div>
+
+  <!-- Customer Information -->
+  <div class="customer-info">
+    <h3>Customer Information</h3>
+    <ul>
+      <li><strong>Full Name:</strong> {{ selectedRequest.user.firstName }} {{ selectedRequest.user.lastName }}</li>
+      <li><strong>Email:</strong> {{ selectedRequest.user.email }}</li>
+      <li><strong>Organization:</strong> {{ selectedRequest.user.organization }}</li>
+      <li><strong>Job Title:</strong> {{ selectedRequest.user.jobTitle }}</li>
+      <li><strong>Industry:</strong> {{ selectedRequest.user.industry }}</li>
+      <li><strong>Country:</strong> {{ selectedRequest.user.country }}</li>
+    </ul>
+  </div>
+
+  <!-- Response Form -->
+  <div class="response-form">
+    <label for="notes">Notes</label>
+    <textarea id="notes" [(ngModel)]="notes" rows="3"></textarea>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <label for="file-upload-1">Upload Document 1</label>
+      <input type="file" id="file-upload-1" (change)="onFileSelected($event, 1)" />
+
+      <label for="file-upload-2">Upload Document 2</label>
+      <input type="file" id="file-upload-2" (change)="onFileSelected($event, 2)" />
+
+      <!-- Uploaded Documents Display -->
+      <div class="uploaded-documents">
+        <h4>Uploaded Documents:</h4>
+        <ul>
+          <li *ngFor="let file of uploadedFiles">
+            {{ file.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <button class="send-button" (click)="sendResponse()">Send</button>
+  </div>
+</div>

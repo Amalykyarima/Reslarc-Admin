@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
+import { Injectable } from '@angular/core';
 
 import { IconDirective } from '@coreui/icons-angular';
 import {
@@ -11,6 +12,7 @@ import {
   SidebarFooterComponent,
   SidebarHeaderComponent,
   SidebarNavComponent,
+  SidebarNavHelper,
   SidebarToggleDirective,
   SidebarTogglerDirective
 } from '@coreui/angular';
@@ -25,11 +27,16 @@ function isOverflown(element: HTMLElement) {
   );
 }
 
+@Injectable({
+  providedIn: 'root', // Makes this service available application-wide
+})
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
   standalone: true,
+  providers: [SidebarNavHelper],
   imports: [
     SidebarComponent,
     SidebarHeaderComponent,
