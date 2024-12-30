@@ -65,10 +65,14 @@
     <!-- Upload Section -->
     <div class="upload-section">
       <label for="file-upload-1">Upload Document 1</label>
-      <input type="file" id="file-upload-1" (change)="onFileSelected($event, 1)" />
+      <!-- <input type="file" id="file-upload-1" (change)="onFileSelected($event, 1)" /> -->
+      <input type="file" (change)="onFileUpload($event)" multiple />
+
 
       <label for="file-upload-2">Upload Document 2</label>
-      <input type="file" id="file-upload-2" (change)="onFileSelected($event, 2)" />
+      <!-- <input type="file" id="file-upload-2" (change)="onFileSelected($event, 2)" /> -->
+      <input type="file" (change)="onFileUpload($event)" multiple />
+
 
       <!-- Uploaded Documents Display -->
       <div class="uploaded-documents">

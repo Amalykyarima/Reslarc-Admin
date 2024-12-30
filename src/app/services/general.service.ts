@@ -54,8 +54,13 @@ decryptText(cipherText: string): string {
   return bytes.toString(CryptoJS.enc.Utf8);
 }
 
-  uploadFile(data: file){
-    return this.apiService.post(`auth/admin`, data);
+
+  uploadFile(url: string, file: any, reqOpts?: any) {
+  console.log('uploading', url, file)
+  return this.http.put(url, file, reqOpts);
+  }
+  sendFile(data: file){
+    return this.apiService.post(`files/upload`, data);
   }
 
   respondToRequest(id:string, data: adminRespond){
