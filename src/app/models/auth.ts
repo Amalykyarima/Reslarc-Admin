@@ -31,5 +31,12 @@ export class file {
 
 export class adminRespond {
   adminNote: string = '';
-  files: any;
+  files?: [
+    {
+      name: string;
+      secure_url: string;
+      url: string;
+    }
+  ]
 }
+

@@ -64,7 +64,7 @@ decryptText(cipherText: string): string {
   }
 
   respondToRequest(id:string, data: adminRespond){
-    return this.apiService.post(`request/${id}`, data)
+    return this.apiService.post(`admin/request/${id}`, data)
   }
 
   getAllRequest(){

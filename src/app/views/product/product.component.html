@@ -58,7 +58,7 @@
   </div>
 
   <!-- Response Form -->
-  <div class="response-form">
+  <div *ngIf="selectedRequest.status === 'Pending'" class="response-form">
     <label for="notes">Notes</label>
     <textarea id="notes" [(ngModel)]="notes" rows="3"></textarea>
 

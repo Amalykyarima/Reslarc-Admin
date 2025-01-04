@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FormCheckComponent } from '@coreui/angular';
 import { GeneralService } from 'src/app/services/general.service';
 import { FormsModule } from '@angular/forms';
-import { adminRespond, file } from 'src/app/models/auth';
+import { adminRespond, file, } from 'src/app/models/auth';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -27,6 +27,10 @@ export class ProductComponent {
   id: string = ""
   file: string = "";
   uploadedFileDetails: any;
+  UploadedDocuments: adminRespond = new adminRespond();
+  userData: any;
+  secure_url: string = "";
+  url: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -125,168 +129,184 @@ export class ProductComponent {
     return this.http.post('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', formData).toPromise();
   }
 
-//   convertFileToDataURL(file: File): Promise<{ file: string }> {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
+  //   convertFileToDataURL(file: File): Promise<{ file: string }> {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
 
-//     reader.onload = () => {
-//       const dataURL = reader.result as string;
-//       resolve({ file: dataURL });
-//     };
+  //     reader.onload = () => {
+  //       const dataURL = reader.result as string;
+  //       resolve({ file: dataURL });
+  //     };
 
-//     reader.onerror = (error) => {
-//       reject(`Error reading file: ${error}`);
-//     };
+  //     reader.onerror = (error) => {
+  //       reject(`Error reading file: ${error}`);
+  //     };
 
-//     reader.readAsDataURL(file);
-//   });
-// }
+  //     reader.readAsDataURL(file);
+  //   });
+  // }
 
-// onFileUpload(event: Event): void {
-//   const input = event.target as HTMLInputElement;
+  // onFileUpload(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
 
-//   if (input.files) {
-//     const files = Array.from(input.files); // Convert FileList to an array
+  //   if (input.files) {
+  //     const files = Array.from(input.files); // Convert FileList to an array
 
-//     Promise.all(files.map((file) => this.convertFileToDataURL(file)))
-//       .then((results) => {
-//         console.log(results); // Logs an array of objects with data URLs
-//         this.file = results[0].file
-//         console.log('file', this.file)
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   }
-// }
-
-onFileUpload(event: Event): void {
-  const input = event.target as HTMLInputElement;
-
-  if (input.files) {
-    const files = Array.from(input.files); // Convert FileList to an array
-
-    Promise.all(files.map((file) => this.convertFileToDataURL(file)))
-      .then((results) => {
-        // Assign the Base64 string of the first file to `this.file`
-        this.file = results[0].file;
-        console.log('Base64 File:', this.file); // Logs the Base64 string of the file
-      })
-      .catch((error) => {
-        console.error('Error converting file to Base64:', error);
-      });
-  }
-}
-
-convertFileToDataURL(file: File): Promise<{ file: string }> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const dataURL = reader.result as string;
-      resolve({ file: dataURL }); // Return the Base64 string in an object
-    };
-
-    reader.onerror = (error) => {
-      reject(`Error reading file: ${error}`);
-    };
-
-    reader.readAsDataURL(file); // Read the file as a Data URL (Base64)
-  });
-}
-
-
-
-  async sendResponse(): Promise<void> {
-    // if (this.uploadedFiles.length === 0) {
-    //   alert('Please upload at least one document before sending.');
-    //   return;
-    // }
-
-    let data1: file = new file();
-
-    data1 = {
-      ...data1,
-      file : this.file
-  }
-
-    await this.generalService.sendFile(data1).subscribe(
-      (res: any) => {
-       console.log('sendFile',res);
-       this.uploadedFileDetails = res.data
-      },
-      (err) => {
-        console.error('Error calling respondToRequest:', err);
-        alert('Failed to send response. Please try again.');
-      }
-    );
-
-
-    // const uploadedFileDetails: any[] = [];
-    // // Upload each file to Cloudinary
-    // try {
-    //   for (const file of this.uploadedFiles) {
-    //     const uploadResponse = await this.uploadFileToCloudinary(file);
-    //     uploadedFileDetails.push({
-    //       name: file.name,
-    //       secure_url: uploadResponse.secure_url,
-    //       url: uploadResponse.url,
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error('Error uploading files to Cloudinary:', error);
-    //   alert('Error uploading files. Please try again.');
-    //   return;
-    // }
-
-    // // Construct payload
-    // const data = {
-    //   adminNote: this.notes,
-    //   files: this.uploadedFileDetails,
-    // };
-
-    // // Send response
-    // await this.generalService.respondToRequest(this.id, data).subscribe(
-    //   (res: any) => {
-    //     console.log('respondToRequest response:', res);
-    //     if (res.statusCode === 200) {
-    //       alert('Response sent successfully!');
-    //     } else {
-    //       console.error('Error in response:', res.message);
-    //     }
-    //   },
-    //   (err) => {
-    //     console.error('Error calling respondToRequest:', err);
-    //     alert('Failed to send response. Please try again.');
-    //   }
-    // );
-  }
-
-  // sendResponse(): void {
-  //   if (this.uploadedFiles.length === 0) {
-  //     alert('Please upload at least one document before sending.');
-  //     return;
+  //     Promise.all(files.map((file) => this.convertFileToDataURL(file)))
+  //       .then((results) => {
+  //         console.log(results); // Logs an array of objects with data URLs
+  //         this.file = results[0].file
+  //         console.log('file', this.file)
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
   //   }
-  //   // Add logic for handling the response submission
-  //   console.log('Notes:', this.notes);
-  //   console.log('Uploaded Files:', this.uploadedFiles);
+  // }
+
+  onFileUpload(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files) {
+      const files = Array.from(input.files); // Convert FileList to an array
+
+      Promise.all(files.map((file) => this.convertFileToDataURL(file)))
+        .then((results) => {
+          // Assign the Base64 string of the first file to `this.file`
+          this.file = results[0].file;
+          console.log('Base64 File:', this.file); // Logs the Base64 string of the file
+        })
+        .catch((error) => {
+          console.error('Error converting file to Base64:', error);
+        });
+    }
+  }
+
+  convertFileToDataURL(file: File): Promise<{ file: string }> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const dataURL = reader.result as string;
+        resolve({ file: dataURL }); // Return the Base64 string in an object
+      };
+
+      reader.onerror = (error) => {
+        reject(`Error reading file: ${error}`);
+      };
+
+      reader.readAsDataURL(file); // Read the file as a Data URL (Base64)
+    });
+  }
+
+
+
+  // async sendResponse(): Promise<void> {
+
+  //   let data1: file = new file();
+
+  //   data1 = {
+  //     ...data1,
+  //     file : this.file
+  // }
+
+  //   await this.generalService.sendFile(data1).subscribe(
+  //     (res: any) => {
+
+  //      console.log('sendFile',res);
+
+  //     this.userData = { ...res };
+
+  //     // Initialize documents
+  //     this.UploadedDocuments.files = { ...this.userData.UploadedDocuments.files };
+
+  //       this.UploadedDocuments.files.secure_url = this.userData.UploadedDocuments.files.secure_url;
+  //       this.UploadedDocuments.files.url = this.userData.UploadedDocuments.files.url ;
+
+
+
+
+  //     },
+  //     (err) => {
+  //       console.error('Error calling respondToRequest:', err);
+  //       alert('Failed to send response. Please try again.');
+  //     }
+  //   );
+
   //   let data: adminRespond = new adminRespond();
 
   //   data = {
   //     ...data,
   //     adminNote: this.notes,
-  //     files: this.uploadedFiles
+  //     files: this.uploadedFileDetails.files,
   //   }
-  //   this.generalService.respondToRequest(this.id, data).subscribe((res: any) => {
-  //     console.log('respondToRequest', res);
-  //     if (res.statusCode === 200) {
-  //       console.log('200', res);
-  //     } else {
-  //       console.error(res.message);
+
+  //   await this.generalService.respondToRequest(this.id, data).subscribe(
+  //     (res: any) => {
+  //       console.log('respondToRequest response:', res);
+  //       if (res.statusCode === 200) {
+  //         alert('Response sent successfully!');
+  //       } else {
+  //         console.error('Error in response:', res.message);
+  //       }
+  //     },
+  //     (err) => {
+  //       console.error('Error calling respondToRequest:', err);
+  //       alert('Failed to send response. Please try again.');
   //     }
-  //   });
+  //   );
   // }
 
+
+  async sendResponse(): Promise<void> {
+    try {
+      // Prepare the file data
+      const data1: file = {
+        file: this.file, // Assuming `this.file` contains the file data
+      };
+
+      // Call the first endpoint to send the file
+      const res1: any = await this.generalService.sendFile(data1).toPromise();
+
+      // Extract the secure and URL from the response
+      this.secure_url = res1.secure_url;
+      this.url = res1.url;
+      console.log('Secure and url', this.secure_url, this.url )
+
+
+      let data: adminRespond = new adminRespond();
+      data = {
+        ...data,
+        adminNote: this.notes,
+        files: [
+          {
+            name: 'file',
+            secure_url: this.secure_url,
+            url: this.url,
+          },
+        ], // `files` is now an array
+      }
+
+      console.log('data', this.id, data)
+
+      // Call the second endpoint with the payload
+      const res2: any = await this.generalService.respondToRequest(this.id, data).toPromise();
+      if (res2.statusCode === 200){
+        alert(res2.message);
+      } else {
+        alert(res2.message);
+      }
+
+      this.getRequests();
+
+      // Handle the response from the second endpoint
+      console.log('Response from second endpoint:', res2);
+
+    } catch (error) {
+      // Handle errors for both endpoints
+      console.error('Error during the process:', error);
+    }
+  }
 
 
 
